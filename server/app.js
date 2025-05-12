@@ -20,7 +20,7 @@ const app = express();
 // ...
 app.use(
   cors({
-    origin: ['http://localhost:5173'], // Add the URLs of allowed origins to this array
+    origin: ['http://localhost:5173'] // Add the URLs of allowed origins to this array
   })
 );
 
@@ -34,6 +34,10 @@ app.use(cookieParser());
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
 // Devs Team - Start working on the routes here:
 // ...
+app.get("/", (req, res) => {
+  res.json({ number: Math.floor(Math.random() * 101) });
+});
+
 app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
@@ -47,6 +51,10 @@ app.get("/api/students", (req, res) => {
 });
 
 // START SERVER
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
+}
+
+module.exports = app;
