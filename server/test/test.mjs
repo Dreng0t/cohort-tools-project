@@ -1,8 +1,9 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const assert = chai.assert;
+// test/test.mjs
+import * as chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../app.js';
 
-const app = require('../app');
+const { assert } = chai;
 chai.use(chaiHttp);
 
 describe('Integration Test', () => {
