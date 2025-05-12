@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha\"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/ironhack-labs/cohort-tools-project#readme",
   "dependencies": {
+    "chai": "^5.2.0",
+    "chai-http": "^5.1.2",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
+    "mocha": "^11.2.2",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1"
   }
