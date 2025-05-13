@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
- 
+
 
 // CREATE SCHEMA
 
@@ -10,31 +10,31 @@ const Schema = mongoose.Schema;
 
 const studentSchema = new Schema({
 
-    firstName: String,
+  firstName: String,
 
   lastName: String,
 
-  email : String,
+  email: String,
 
   phone: String,
 
   linkedinUrl: String,
 
-  languages: [String],
+  languages: Array,
 
-  endDate: Date,
+  program: String,
 
-  inProgress: Boolean,
+  backgound: String,
 
-  programManager: String,
+  image: String,
 
-  leadTeacher: String,
+  projects: Array,
 
-  totalHours: Number
+  cohort: { type: mongoose.Schema.Types.ObjectId, ref: `Cohort` }
 
 });
 
- 
+
 
 // CREATE MODEL
 
@@ -46,7 +46,7 @@ const studentSchema = new Schema({
 
 const Student = mongoose.model('student', studentSchema);
 
- 
+
 
 // EXPORT THE MODEL
 
