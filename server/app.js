@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mongoose = require('mongoose');
-const Cohort = require('./models/Cohort.model')
+const Cohort = require('./models/cohort.model')
 const PORT = 5005;
 
 // STATIC DATA
