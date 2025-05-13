@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const mongoose = require('mongoose');
 const PORT = 5005;
 
 // STATIC DATA
@@ -23,6 +24,14 @@ app.use(
     origin: ['http://localhost:5173'] // Add the URLs of allowed origins to this array
   })
 );
+
+mongoose
+
+  .connect('mongodb://127.0.0.1:27017/mongoose-intro-dev')
+
+  .then(x => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
+
+  .catch(err => console.error('Error connecting to mongo', err));
 
 app.use(express.json());
 app.use(morgan("dev"));
