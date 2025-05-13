@@ -64,7 +64,7 @@ app.get("/api/students", (req, res) => {
 app.get("/students", (req, res) => {
   Student.find({})
     .then(students => {
-      res.status(200).json(books);
+      res.status(200).json(students);
     })
     .catch(error => {
 
