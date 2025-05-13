@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mongoose = require('mongoose');
+const Cohort = require('./models/Cohort.model')
 const PORT = 5005;
 
 // STATIC DATA
@@ -27,7 +28,7 @@ app.use(
 
 mongoose
 
-  .connect('mongodb://127.0.0.1:27017/mongoose-intro-dev')
+  .connect('mongodb://127.0.0.1:27017/cohort-tools-DB')
 
   .then(x => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
 
@@ -57,6 +58,62 @@ app.get("/api/cohorts", (req, res) => {
 
 app.get("/api/students", (req, res) => {
   res.json(students)
+});
+
+app.post('/cohorts', (req, res) => {
+
+  // req.body contains the data sent by the client.
+
+  // This must match the structure defined in our Book schema.
+
+ 
+
+  // Book.create(req.body)
+
+  // // OR
+
+  Cohort.create({
+
+    cohortSlug: req.body.cohortSlug,
+
+    cohortName: req.body.cohortName,
+
+    program : req.body.program,
+
+    format: req.body.format,
+
+    campus: req.body.campus,
+
+    startDate: req.body.startDate,
+
+    endDate: req.body.endDate,
+
+    inProgress: req.body.inProgress,
+
+    programManager: req.body.programManager,
+
+    leadTeacher: req.body.leadTeacher,
+
+    totalHours: req.body.totalHours
+
+  })
+
+    .then(createdCohort => {
+
+      console.log('Book created ->', createdCohort);
+
+      res.status(201).json(createdCohort);
+
+    })
+
+    .catch(error => {
+
+      console.error('Error while creating the book ->', error);
+
+      res.status(500).json({ error: 'Failed to create the cohort' });
+
+    });
+
 });
 
 // START SERVER

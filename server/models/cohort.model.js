@@ -10,19 +10,27 @@ const Schema = mongoose.Schema;
 
 const cohortSchema = new Schema({
 
-  cohortSluh: String,
+  cohortSlug: String,
 
   cohortName: String,
 
-  codeISBN: { type: String, maxlength: 13, unique: true },
+  program : String,
 
-  quantity: { type: Number, min: 0, default: 0 },
+  format: String,
 
-  lastPublished: { type: Date, default: Date.now },
+  campus: String,
 
-  genre: { type: String, enum: ['romance', 'fiction', 'biography', 'poetry'] },
+  startDate: Date,
 
-  author: String
+  endDate: Date,
+
+  inProgress: Boolean,
+
+  programManager: String,
+
+  leadTeacher: String,
+
+  totalHours: Number
 
 });
 
@@ -36,10 +44,10 @@ const cohortSchema = new Schema({
 
 //                          "Book" --> "books"
 
-const Book = mongoose.model('Book', bookSchema);
+const Cohort = mongoose.model('Cohort', cohortSchema);
 
  
 
 // EXPORT THE MODEL
 
-module.exports = Book;
+module.exports = Cohort;
