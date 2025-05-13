@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mongoose = require('mongoose');
 const Cohort = require('./models/cohort.model')
+const Student = require('./models/student.model')
 const PORT = 5005;
 
 // STATIC DATA
@@ -59,6 +60,20 @@ app.get("/api/cohorts", (req, res) => {
 app.get("/api/students", (req, res) => {
   res.json(students)
 });
+
+app.get("/students", (req, res) => {
+  Student.find({})
+    .then(students => {
+      res.status(200).json(books);
+    })
+    .catch(error => {
+
+      console.error('Error while retrieving students ->', error);
+
+      res.status(500).json({ error: 'Failed to retrieve students' });
+
+    });
+})
 
 app.post('/cohorts', (req, res) => {
 
