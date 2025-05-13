@@ -98,19 +98,64 @@ app.post('/cohorts', (req, res) => {
 
   })
 
-    .then(createdCohort => {
+    .then(createdStudent => {
 
-      console.log('Book created ->', createdCohort);
+      console.log('Book created ->', createdStudent);
 
-      res.status(201).json(createdCohort);
+      res.status(201).json(createdStudent);
 
     })
 
     .catch(error => {
 
-      console.error('Error while creating the book ->', error);
+      console.error('Error while creating the cohort ->', error);
 
       res.status(500).json({ error: 'Failed to create the cohort' });
+
+    });
+
+});
+
+app.post('/students', (req, res) => {
+Student.create({
+
+    firstName: req.body.firstName,
+
+    lastName: req.body.lastName,
+
+    email : req.body.email,
+
+    phone: req.body.phone,
+
+    linkedinUrl: req.body.linkedinUrl,
+
+    languages: req.body.languages,
+
+    program: req.body.program,
+
+    background: req.body.background,
+
+    image: req.body.image,
+
+    cohort: req.body.cohort,
+
+    projects: req.body.projects
+
+  })
+
+    .then(createdStudent => {
+
+      console.log('Book created ->', createdStudent);
+
+      res.status(201).json(createdStudent);
+
+    })
+
+    .catch(error => {
+
+      console.error('Error while creating the student ->', error);
+
+      res.status(500).json({ error: 'Failed to create the student' });
 
     });
 
