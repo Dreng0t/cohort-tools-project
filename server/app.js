@@ -115,7 +115,7 @@ app.post('/cohorts', (req, res) => {
 
     .then(createdStudent => {
 
-      console.log('Book created ->', createdStudent);
+      console.log('Cohort created ->', createdStudent);
 
       res.status(201).json(createdStudent);
 
@@ -160,7 +160,7 @@ Student.create({
 
     .then(createdStudent => {
 
-      console.log('Book created ->', createdStudent);
+      console.log('Student created ->', createdStudent);
 
       res.status(201).json(createdStudent);
 
