@@ -28,6 +28,7 @@ const app = express();
 //
 // Security
 //
+app.disable('x-powered-by')
 
 app.use(helmet());
 
