@@ -4,6 +4,10 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const csrf = require('csurf');
+const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 const Cohort = require('./models/cohort.model')
 const Student = require('./models/student.model')
 const PORT = 5005;
@@ -31,6 +35,15 @@ const app = express();
 app.disable('x-powered-by')
 
 app.use(helmet());
+app.use(csrf());
+app.use(mongoSanitize()); // Prevent NoSQL injection
+app.use(xss());           // Prevent XSS
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
 
 app.use(
   cors({
