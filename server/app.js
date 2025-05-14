@@ -126,88 +126,49 @@ app.get('/api/students/:studentId', (req, res, next) => {
 app.post('/api/cohorts', (req, res) => {
 
   Cohort.create({
-
     cohortSlug: req.body.cohortSlug,
-
     cohortName: req.body.cohortName,
-
     program: req.body.program,
-
     format: req.body.format,
-
     campus: req.body.campus,
-
     startDate: req.body.startDate,
-
     endDate: req.body.endDate,
-
     inProgress: req.body.inProgress,
-
     programManager: req.body.programManager,
-
     leadTeacher: req.body.leadTeacher,
-
     totalHours: req.body.totalHours
-
   })
-
     .then(createdCohort => {
-
       console.log('Cohort created ->', createdCohort);
-
       res.status(201).json(createdCohort);
-
     })
-
     .catch(error => {
-
       console.error('Error while creating the cohort ->', error);
-
       res.status(500).json({ error: 'Failed to create the cohort' });
-
     });
 
 });
 
 app.post('/api/students', (req, res) => {
   Student.create({
-
     firstName: req.body.firstName,
-
     lastName: req.body.lastName,
-
     email: req.body.email,
-
     phone: req.body.phone,
-
     linkedinUrl: req.body.linkedinUrl,
-
     languages: req.body.languages,
-
     program: req.body.program,
-
     background: req.body.background,
-
     image: req.body.image,
-
     cohort: req.body.cohort,
-
     projects: req.body.projects
-
   })
-
     .then(createdStudent => {
-
       console.log('Student created ->', createdStudent);
-
       res.status(201).json(createdStudent);
-
     })
-
     .catch(error => {
-
       console.error('Error while creating the student ->', error);
-
       res.status(500).json({ error: 'Failed to create the student' });
 
     });
@@ -246,7 +207,7 @@ app.put('/api/students/:studentId', (req, res, next) => {
     })
 })
 
-app.delete('/cohorts/:cohortId', (req, res, next) => {
+app.delete('/api/cohorts/:cohortId', (req, res, next) => {
 
   let { cohortId } = req.params;
 
@@ -260,7 +221,7 @@ app.delete('/cohorts/:cohortId', (req, res, next) => {
     })
 })
 
-app.delete('/students/:studentId', (req, res, next) => {
+app.delete('/api/students/:studentId', (req, res, next) => {
 
   let { studentId } = req.params;
 
@@ -272,6 +233,15 @@ app.delete('/students/:studentId', (req, res, next) => {
       console.log("\n\n Error deleting student in the DB...\n", error);
       res.status(500).json({ error: 'Failed to fetch student' });
     })
+})
+
+app.use((req, res, next) => {
+  res.status(404).send("Sorry can't find that!")
+})
+
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
 })
 
 // START SERVER
