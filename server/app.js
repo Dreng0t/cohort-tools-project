@@ -19,6 +19,7 @@ const PORT = 5005;
 // ...
 const cohorts = require("./cohorts.json");
 const students = require("./students.json");
+const csrfProtection = csrf({ cookie: true });
 
 
 // INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
@@ -33,11 +34,17 @@ const app = express();
 // Security
 //
 app.disable('x-powered-by')
+app.use(csrfProtection);
 
 app.use(helmet());
 app.use(csrf());
 app.use(mongoSanitize()); // Prevent NoSQL injection
 app.use(xss());           // Prevent XSS
+
+app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -47,7 +54,8 @@ app.use(limiter);
 
 app.use(
   cors({
-    origin: ['http://localhost:5173'] // Add the URLs of allowed origins to this array
+    origin: ['http://localhost:5173'], // Add the URLs of allowed origins to this array
+    
   })
 );
 
