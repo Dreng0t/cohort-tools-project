@@ -41,6 +41,10 @@ app.use(express.json()); // For JSON bodies
 const csrfProtection = csrf({ cookie: true }); // Store token in cookie
 app.use(csrfProtection);
 
+app.get('/form', (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
+
 app.use(helmet());
 app.use(mongoSanitize()); // Prevent NoSQL injection
 app.use(xss());           // Prevent XSS
