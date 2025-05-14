@@ -20,7 +20,7 @@ const studentSchema = new Schema({
 
   linkedinUrl: String,
 
-  languages: Array,
+  languages: [String],
 
   program: String,
 
@@ -30,7 +30,11 @@ const studentSchema = new Schema({
 
   projects: Array,
 
-  cohort: { type: mongoose.Schema.Types.ObjectId, ref: `Cohort` }
+  cohort: {
+    type: Schema.Types.ObjectId,
+    ref: `Cohort`,
+    required: true
+  }
 
 });
 

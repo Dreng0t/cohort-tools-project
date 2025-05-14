@@ -61,8 +61,37 @@ app.get("/api/students", (req, res) => {
   res.json(students)
 });
 
+app.get("/cohorts", (req, res) => {
+  Cohort.find({})
+    .then(cohorts => {
+      res.status(200).json(cohorts);
+    })
+    .catch(error => {
+
+      console.error('Error while retrieving cohorts ->', error);
+
+      res.status(500).json({ error: 'Failed to retrieve cohorts' });
+
+    });
+})
+
+app.get('/cohorts/:cohortId', (req, res, next) => {
+
+  let { cohortId } = req.params;
+
+  Cohort.findById(cohortId)
+    .then((cohort) => {
+      res.status(200).json(cohort);
+    })
+    .catch((error) => {
+      console.log("\n\n Error fetching cohort in the DB...\n", error);
+      res.status(500).json({ error: 'Failed to fetch cohort' });
+    })
+})
+
 app.get("/students", (req, res) => {
   Student.find({})
+    .populate("cohort")
     .then(students => {
       res.status(200).json(students);
     })
@@ -75,13 +104,28 @@ app.get("/students", (req, res) => {
     });
 })
 
+app.get('/students/:studentId', (req, res, next) => {
+
+  let { studentId } = req.params;
+
+  Student.findById(studentId)
+    .populate("cohort")
+    .then((student) => {
+      res.status(200).json(student);
+    })
+    .catch((error) => {
+      console.log("\n\n Error fetching student in the DB...\n", error);
+      res.status(500).json({ error: 'Failed to fetch student' });
+    })
+})
+
 app.post('/cohorts', (req, res) => {
 
   // req.body contains the data sent by the client.
 
   // This must match the structure defined in our Book schema.
 
- 
+
 
   // Book.create(req.body)
 
@@ -93,7 +137,7 @@ app.post('/cohorts', (req, res) => {
 
     cohortName: req.body.cohortName,
 
-    program : req.body.program,
+    program: req.body.program,
 
     format: req.body.format,
 
@@ -113,11 +157,11 @@ app.post('/cohorts', (req, res) => {
 
   })
 
-    .then(createdStudent => {
+    .then(createdCohort => {
 
-      console.log('Cohort created ->', createdStudent);
+      console.log('Cohort created ->', createdCohort);
 
-      res.status(201).json(createdStudent);
+      res.status(201).json(createdCohort);
 
     })
 
@@ -132,13 +176,13 @@ app.post('/cohorts', (req, res) => {
 });
 
 app.post('/students', (req, res) => {
-Student.create({
+  Student.create({
 
     firstName: req.body.firstName,
 
     lastName: req.body.lastName,
 
-    email : req.body.email,
+    email: req.body.email,
 
     phone: req.body.phone,
 
@@ -175,6 +219,66 @@ Student.create({
     });
 
 });
+
+app.put('/cohorts/:cohortId', (req, res, next) => {
+
+  let { cohortId } = req.params;
+
+  const newcohort = req.body;
+
+  Cohort.findByIdAndUpdate(cohortId, newcohort, { new: true })
+    .then((cohort) => {
+      res.status(200).json(cohort);
+    })
+    .catch((error) => {
+      console.log("\n\n Error updating cohort in the DB...\n", error);
+      res.status(500).json({ error: 'Failed to fetch cohort' });
+    })
+})
+
+app.put('/students/:studentId', (req, res, next) => {
+
+  let { studentId } = req.params;
+
+  const newstudent = req.body;
+
+  Student.findByIdAndUpdate(studentId, newstudent, { new: true })
+    .then((student) => {
+      res.status(200).json(student);
+    })
+    .catch((error) => {
+      console.log("\n\n Error updating student in the DB...\n", error);
+      res.status(500).json({ error: 'Failed to fetch student' });
+    })
+})
+
+app.delete('/cohorts/:cohortId', (req, res, next) => {
+
+  let { cohortId } = req.params;
+
+  Cohort.findByIdAndDelete(cohortId)
+    .then((cohort) => {
+      res.status(200).json(cohort);
+    })
+    .catch((error) => {
+      console.log("\n\n Error deleting cohort in the DB...\n", error);
+      res.status(500).json({ error: 'Failed to fetch cohort' });
+    })
+})
+
+app.delete('/students/:studentId', (req, res, next) => {
+
+  let { studentId } = req.params;
+
+  Student.findByIdAndDelete(studentId)
+    .then((student) => {
+      res.status(200).json(student);
+    })
+    .catch((error) => {
+      console.log("\n\n Error deleting student in the DB...\n", error);
+      res.status(500).json({ error: 'Failed to fetch student' });
+    })
+})
 
 // START SERVER
 if (require.main === module) {

@@ -10,27 +10,67 @@ const Schema = mongoose.Schema;
 
 const cohortSchema = new Schema({
 
-  cohortSlug: String,
+  cohortSlug: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 
-  cohortName: String,
+  cohortName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 
-  program : String,
+  program : {
+    type: String,
+    required: true,
+    unique: true,
+  },
 
-  format: String,
+  format: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 
-  campus: String,
+  campus: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 
-  startDate: Date,
+  startDate: {
+    type: Date,
+    default: Date.now
+  },
 
-  endDate: Date,
+  endDate: {
+    type: Date,
+    default: Date.now
+  },
 
-  inProgress: Boolean,
+  inProgress: {
+    type: Boolean,
+    default: false,
+  },
 
-  programManager: String,
+  programManager: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 
-  leadTeacher: String,
+  leadTeacher: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 
-  totalHours: Number
+  totalHours: {
+    type: Number,
+    min: 1
+  }
 
 });
 
