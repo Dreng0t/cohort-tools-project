@@ -7,6 +7,12 @@ const Cohort = require('./models/cohort.model')
 const Student = require('./models/student.model')
 const PORT = 5005;
 
+//
+// Security
+//
+const helmet = require('helmet');
+app.use(helmet());
+
 // STATIC DATA
 // Devs Team - Import the provided files with JSON data of students and cohorts here:
 // ...
