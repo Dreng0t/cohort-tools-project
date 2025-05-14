@@ -19,7 +19,6 @@ const PORT = 5005;
 // ...
 const cohorts = require("./cohorts.json");
 const students = require("./students.json");
-const csrfProtection = csrf({ cookie: true });
 
 
 // INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
@@ -34,7 +33,7 @@ const app = express();
 // Security
 //
 app.disable('x-powered-by')
-app.use(csrfProtection);
+
 
 app.use(cookieParser()); // Needed to store CSRF token in cookies
 app.use(express.urlencoded({ extended: true })); // Parse form data
