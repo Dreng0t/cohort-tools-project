@@ -53,15 +53,16 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
+/*
 app.get("/api/cohorts", (req, res) => {
   res.json(cohorts)
-});
+});*/
 
-app.get("/api/students", (req, res) => {
+/*app.get("/api/students", (req, res) => {
   res.json(students)
-});
+});*/
 
-app.get("/cohorts", (req, res) => {
+app.get("/api/cohorts", (req, res) => {
   Cohort.find({})
     .then(cohorts => {
       res.status(200).json(cohorts);
@@ -75,7 +76,7 @@ app.get("/cohorts", (req, res) => {
     });
 })
 
-app.get('/cohorts/:cohortId', (req, res, next) => {
+app.get('/api/cohorts/:cohortId', (req, res, next) => {
 
   let { cohortId } = req.params;
 
@@ -89,7 +90,7 @@ app.get('/cohorts/:cohortId', (req, res, next) => {
     })
 })
 
-app.get("/students", (req, res) => {
+app.get("/api/students", (req, res) => {
   Student.find({})
     .populate("cohort")
     .then(students => {
@@ -104,7 +105,7 @@ app.get("/students", (req, res) => {
     });
 })
 
-app.get('/students/:studentId', (req, res, next) => {
+app.get('/api/students/:studentId', (req, res, next) => {
 
   let { studentId } = req.params;
 
@@ -119,7 +120,7 @@ app.get('/students/:studentId', (req, res, next) => {
     })
 })
 
-app.post('/cohorts', (req, res) => {
+app.post('/api/cohorts', (req, res) => {
 
   // req.body contains the data sent by the client.
 
@@ -175,7 +176,7 @@ app.post('/cohorts', (req, res) => {
 
 });
 
-app.post('/students', (req, res) => {
+app.post('/api/students', (req, res) => {
   Student.create({
 
     firstName: req.body.firstName,
@@ -220,7 +221,7 @@ app.post('/students', (req, res) => {
 
 });
 
-app.put('/cohorts/:cohortId', (req, res, next) => {
+app.put('/api/cohorts/:cohortId', (req, res, next) => {
 
   let { cohortId } = req.params;
 
@@ -236,7 +237,7 @@ app.put('/cohorts/:cohortId', (req, res, next) => {
     })
 })
 
-app.put('/students/:studentId', (req, res, next) => {
+app.put('/api/students/:studentId', (req, res, next) => {
 
   let { studentId } = req.params;
 
