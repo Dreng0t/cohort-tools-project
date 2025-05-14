@@ -63,14 +63,6 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
-/*
-app.get("/api/cohorts", (req, res) => {
-  res.json(cohorts)
-});*/
-
-/*app.get("/api/students", (req, res) => {
-  res.json(students)
-});*/
 
 app.get("/api/cohorts", (req, res) => {
   Cohort.find({})
@@ -131,16 +123,6 @@ app.get('/api/students/:studentId', (req, res, next) => {
 })
 
 app.post('/api/cohorts', (req, res) => {
-
-  // req.body contains the data sent by the client.
-
-  // This must match the structure defined in our Book schema.
-
-
-
-  // Book.create(req.body)
-
-  // // OR
 
   Cohort.create({
 
