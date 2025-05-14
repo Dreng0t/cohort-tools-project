@@ -24,6 +24,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "helmet": "^8.1.0",
     "mocha": "^11.2.2",
     "mongoose": "^8.14.2",
     "morgan": "^1.10.0",
