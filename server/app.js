@@ -36,8 +36,14 @@ const app = express();
 app.disable('x-powered-by')
 app.use(csrfProtection);
 
+app.use(cookieParser()); // Needed to store CSRF token in cookies
+app.use(express.urlencoded({ extended: true })); // Parse form data
+app.use(express.json()); // For JSON bodies
+
+const csrfProtection = csrf({ cookie: true }); // Store token in cookie
+app.use(csrfProtection);
+
 app.use(helmet());
-app.use(csrf());
 app.use(mongoSanitize()); // Prevent NoSQL injection
 app.use(xss());           // Prevent XSS
 
