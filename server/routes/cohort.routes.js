@@ -1,5 +1,7 @@
 const router = require("express").Router();
 
+const mongoose = require("mongoose");
+
 const Cohort = require("../models/cohort.model.js");
 
 router.get("/api/cohorts", (req, res, next) => {

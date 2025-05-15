@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+const mongoose = require("mongoose");
+
 const Student = require('../models/student.model.js')
 
 router.get("/api/students", (req, res, next) => {
@@ -7,7 +9,7 @@ router.get("/api/students", (req, res, next) => {
     .populate("cohort")
     .then(students => res.status(200).json(students))
     .catch(err => next(createError(500, 'Failed to retrieve students')));
-});z
+});
 
 router.get('/api/students/:studentId', (req, res, next) => {
   let { studentId } = req.params;

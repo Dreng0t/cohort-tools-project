@@ -71,6 +71,9 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
+app.use("/", require("./routes/cohort.routes"))
+app.use("/", require("./routes/student.routes"))
+
 app.use((req, res, next) => {
   next(createError(404, "Sorry, can't find that!"));
 });
@@ -85,7 +88,5 @@ if (require.main === module) {
   });
 }
 
-app.use("/", require("./routes/cohort.routes"))
-app.use("/", require("./routes/student.routes"))
 
 module.exports = app;
