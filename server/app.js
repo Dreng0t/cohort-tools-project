@@ -71,22 +71,6 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
-app.get("/api/cohorts", (req, res, next) => {
-  Cohort.find({})
-    .then(cohorts => res.status(200).json(cohorts))
-    .catch(err => next(createError(500, 'Failed to retrieve cohorts')));
-});
-
-app.get('/api/cohorts/:cohortId', (req, res, next) => {
-  let { cohortId } = req.params;
-  Cohort.findById(cohortId)
-    .then(cohort => {
-      if (!cohort) return next(createError(404, 'Cohort not found'));
-      res.status(200).json(cohort);
-    })
-    .catch(err => next(createError(500, 'Failed to fetch cohort')));
-});
-
 app.get("/api/students", (req, res, next) => {
   Student.find({})
     .populate("cohort")
@@ -116,26 +100,10 @@ app.get('/api/students/cohort/:cohortId', (req, res, next) => {
     .catch(err => next(createError(500, 'Failed to fetch student')));
 });
 
-app.post('/api/cohorts', (req, res, next) => {
-  Cohort.create(req.body)
-    .then(createdCohort => res.status(201).json(createdCohort))
-    .catch(err => next(createError(500, 'Failed to create the cohort')));
-});
-
 app.post('/api/students', (req, res, next) => {
   Student.create(req.body)
     .then(createdStudent => res.status(201).json(createdStudent))
     .catch(err => next(createError(500, 'Failed to create the student')));
-});
-
-app.put('/api/cohorts/:cohortId', (req, res, next) => {
-  let { cohortId } = req.params;
-  Cohort.findByIdAndUpdate(cohortId, req.body, { new: true })
-    .then(cohort => {
-      if (!cohort) return next(createError(404, 'Cohort not found'));
-      res.status(200).json(cohort);
-    })
-    .catch(err => next(createError(500, 'Failed to update cohort')));
 });
 
 app.put('/api/students/:studentId', (req, res, next) => {
@@ -146,16 +114,6 @@ app.put('/api/students/:studentId', (req, res, next) => {
       res.status(200).json(student);
     })
     .catch(err => next(createError(500, 'Failed to update student')));
-});
-
-app.delete('/api/cohorts/:cohortId', (req, res, next) => {
-  let { cohortId } = req.params;
-  Cohort.findByIdAndDelete(cohortId)
-    .then(cohort => {
-      if (!cohort) return next(createError(404, 'Cohort not found'));
-      res.status(200).json(cohort);
-    })
-    .catch(err => next(createError(500, 'Failed to delete cohort')));
 });
 
 app.delete('/api/students/:studentId', (req, res, next) => {
@@ -181,5 +139,8 @@ if (require.main === module) {
     console.log(`Server listening on port ${PORT}`);
   });
 }
+
+app.use("/", require("./routes/cohort.routes"))
+app.use("/", require("./routes/student.routes"))
 
 module.exports = app;
