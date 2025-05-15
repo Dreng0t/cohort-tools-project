@@ -24,20 +24,17 @@ const cohortSchema = new Schema({
 
   program : {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
 
   format: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
 
   campus: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
 
   startDate: {
@@ -57,14 +54,12 @@ const cohortSchema = new Schema({
 
   programManager: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
 
   leadTeacher: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
 
   totalHours: {

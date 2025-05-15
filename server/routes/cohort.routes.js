@@ -2,7 +2,7 @@ const router = require("express").Router();
 const createError = require('http-errors');
 const Cohort = require("../models/cohort.model.js");
 
-router.get("/api/cohorts", async (req, res, next) => {
+router.get("/cohorts", async (req, res, next) => {
   try {
     const cohorts = await Cohort.find({});
     res.status(200).json(cohorts);
@@ -11,7 +11,7 @@ router.get("/api/cohorts", async (req, res, next) => {
   }
 });
 
-router.get('/api/cohorts/:cohortId', async (req, res, next) => {
+router.get('/cohorts/:cohortId', async (req, res, next) => {
   const { cohortId } = req.params;
   try {
     const cohort = await Cohort.findById(cohortId);
@@ -22,16 +22,17 @@ router.get('/api/cohorts/:cohortId', async (req, res, next) => {
   }
 });
 
-router.post('/api/cohorts', async (req, res, next) => {
+router.post('/cohorts', async (req, res, next) => {
   try {
     const createdCohort = await Cohort.create(req.body);
     res.status(201).json(createdCohort);
   } catch (err) {
-    next(createError(500, 'Failed to create the cohort'));
+    console.error("Error in POST /cohorts:", err);  
+    next(createError(500, err.message));
   }
 });
 
-router.put('/api/cohorts/:cohortId', async (req, res, next) => {
+router.put('/cohorts/:cohortId', async (req, res, next) => {
   const { cohortId } = req.params;
   try {
     const cohort = await Cohort.findByIdAndUpdate(cohortId, req.body, { new: true });
@@ -42,7 +43,7 @@ router.put('/api/cohorts/:cohortId', async (req, res, next) => {
   }
 });
 
-router.delete('/api/cohorts/:cohortId', async (req, res, next) => {
+router.delete('/cohorts/:cohortId', async (req, res, next) => {
   const { cohortId } = req.params;
   try {
     const cohort = await Cohort.findByIdAndDelete(cohortId);
