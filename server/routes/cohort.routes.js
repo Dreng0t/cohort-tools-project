@@ -2,11 +2,6 @@ const router = require("express").Router();
 
 const Cohort = require("../models/cohort.model.js");
 
-
-//
-// POST /cooks
-//
-
 router.get("/api/cohorts", (req, res, next) => {
   Cohort.find({})
     .then(cohorts => res.status(200).json(cohorts))
