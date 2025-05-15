@@ -64,7 +64,7 @@ app.use(limiter);
 app.use(
   cors({
     origin: ['http://localhost:5173'], // Add the URLs of allowed origins to this array
-    
+
   })
 );
 
@@ -146,6 +146,23 @@ app.get('/api/students/:studentId', (req, res, next) => {
     .populate("cohort")
     .then((student) => {
       res.status(200).json(student);
+    })
+    .catch((error) => {
+      console.log("\n\n Error fetching student in the DB...\n", error);
+      res.status(500).json({ error: 'Failed to fetch student' });
+    })
+})
+
+app.get('/api/students/cohort/:cohortId', (req, res, next) => {
+
+  let { cohortId } = req.params;
+
+  let filter = { "cohort": cohortId };
+
+  Student.find(filter)
+    .populate("cohort")
+    .then((cohort) => {
+      res.status(200).json(cohort);
     })
     .catch((error) => {
       console.log("\n\n Error fetching student in the DB...\n", error);
