@@ -9,12 +9,8 @@ const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const createError = require('http-errors');
-const Cohort = require('./models/cohort.model')
 
 const PORT = 5005;
-
-const cohorts = require("./cohorts.json");
-const students = require("./students.json");
 
 const app = express();
 
