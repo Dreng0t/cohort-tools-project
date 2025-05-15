@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "csurf": "^1.10.0",
-    "express-mongo-sanitize": "^2.2.0",
-    "express-rate-limit": "^7.5.0",
-    "helmet": "^8.1.0",
-    "xss-clean": "^0.1.4"
-  }
-}

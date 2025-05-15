@@ -6,6 +6,7 @@ import app from '../app.js';
 const { assert } = chai;
 chai.use(chaiHttp);
 
+
 describe('Integration Test', () => {
   it('Gets random number from endpoint', (done) => {
     chai

@@ -20,7 +20,6 @@
   "homepage": "https://github.com/ironhack-labs/cohort-tools-project#readme",
   "dependencies": {
     "chai": "^5.2.0",
-    "chai-http": "^5.1.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "csurf": "^1.10.0",
@@ -31,5 +30,8 @@
     "mongoose": "^8.14.3",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "chai-http": "^5.1.2"
   }
 }
