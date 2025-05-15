@@ -99,8 +99,19 @@ app.get('/api/students/:studentId', (req, res, next) => {
   Student.findById(studentId)
     .populate("cohort")
     .then(student => {
-      if (!student) return next(createError(404, 'Student not found'));
       res.status(200).json(student);
+    })
+    .catch(err => next(createError(500, 'Failed to fetch student')));
+});
+
+app.get('/api/students/cohort/:cohortId', (req, res, next) => {
+  let { cohortId } = req.params;
+  let filter = {cohort: cohortId}
+  Student.find(filter)
+    .populate("cohort")
+    .then(students => {
+      if (!students) return next(createError(404, 'Student not found'));
+      res.status(200).json(students);
     })
     .catch(err => next(createError(500, 'Failed to fetch student')));
 });
