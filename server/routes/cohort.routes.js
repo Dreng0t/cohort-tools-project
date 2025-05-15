@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const Cook = require("./models/Cohort.model");
+const Cohort = require("./models/Cohort.model");
 
 
 //
