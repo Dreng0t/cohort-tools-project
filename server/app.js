@@ -9,12 +9,8 @@ const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const createError = require('http-errors');
-const Cohort = require('./models/cohort.model')
 
 const PORT = 5005;
-
-const cohorts = require("./cohorts.json");
-const students = require("./students.json");
 
 const app = express();
 
@@ -71,6 +67,9 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
+app.use("/", require("./routes/cohort.routes"))
+app.use("/", require("./routes/student.routes"))
+
 app.use((req, res, next) => {
   next(createError(404, "Sorry, can't find that!"));
 });
@@ -84,8 +83,5 @@ if (require.main === module) {
     console.log(`Server listening on port ${PORT}`);
   });
 }
-
-app.use("/", require("./routes/cohort.routes"))
-app.use("/", require("./routes/student.routes"))
 
 module.exports = app;
