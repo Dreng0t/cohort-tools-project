@@ -9,6 +9,8 @@ const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const createError = require('http-errors');
+require('dotenv').config();
+
 
 const PORT = 5005;
 
