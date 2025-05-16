@@ -66,6 +66,7 @@ app.get("/docs", (req, res) => {
 
 app.use("/api", require("./routes/cohort.routes"));
 app.use("/api", require("./routes/student.routes"));
+app.use("/api", require("./routes/user.routes"));
 app.use("/auth", require("./routes/auth.routes"));
 
 // Apply CSRF protection to /api routes before route mounting
