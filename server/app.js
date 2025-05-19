@@ -37,10 +37,10 @@ app.use(limiter);
 app.use(
   cors({
     origin: ['http://localhost:5173'],
+    credentials: true
   })
 );
 
-// Route to get CSRF token
 app.get('/form', csrfProtection, (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
@@ -69,10 +69,11 @@ app.use("/api", require("./routes/student.routes"));
 app.use("/api", require("./routes/user.routes"));
 app.use("/auth", require("./routes/auth.routes"));
 
-// Apply CSRF protection to /api routes before route mounting
-app.use('/api', csrfProtection);
 
-// Set CSRF token in res.locals (only after CSRF middleware is applied)
+app.use('/api', csrfProtection);
+app.use('/auth', csrfProtection);
+
+
 app.use((req, res, next) => {
   if (req.csrfToken) {
     res.locals.csrfToken = req.csrfToken();
@@ -80,7 +81,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Error Handling
+
 app.use((req, res, next) => {
   next(createError(404, "Sorry, can't find that!"));
 });

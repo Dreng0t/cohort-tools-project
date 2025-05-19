@@ -38,7 +38,7 @@ router.get('/students/cohort/:cohortId', async (req, res, next) => {
   }
 });
 
-router.post('/students', isAuthenticated, async (req, res, next) => {
+router.post('/students', async (req, res, next) => {
   try {
     const createdStudent = await Student.create(req.body);
     res.status(201).json(createdStudent);
@@ -47,7 +47,7 @@ router.post('/students', isAuthenticated, async (req, res, next) => {
   }
 });
 
-router.put('/students/:studentId', isAuthenticated, async (req, res, next) => {
+router.put('/students/:studentId', async (req, res, next) => {
   const { studentId } = req.params;
   try {
     const updatedStudent = await Student.findByIdAndUpdate(studentId, req.body, { new: true });
@@ -58,7 +58,7 @@ router.put('/students/:studentId', isAuthenticated, async (req, res, next) => {
   }
 });
 
-router.delete('/students/:studentId', isAuthenticated, async (req, res, next) => {
+router.delete('/students/:studentId', async (req, res, next) => {
   const { studentId } = req.params;
   try {
     const deletedStudent = await Student.findByIdAndDelete(studentId);

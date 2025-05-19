@@ -19,46 +19,43 @@ function AuthProviderWrapper(props) {
   };
 
   const authenticateUser = () => {
-    // Get the stored token from the localStorage
     const storedToken = localStorage.getItem("authToken");
-
-    // If the token exists in the localStorage
+    const csrfToken = localStorage.getItem("csrfToken");
+  
+    console.log("Stored Auth Token:", storedToken);
+    console.log("Stored CSRF Token:", csrfToken);
+  
     if (storedToken) {
-      // We must send the JWT token in the request's "Authorization" Headers
       axios
         .get(`${API_URL}/auth/verify`, {
-          headers: { Authorization: `Bearer ${storedToken}` },
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+            "CSRF-Token": csrfToken,
+          },
         })
         .then((response) => {
-          // If the server verifies that JWT token is valid
           const user = response.data;
-          // Update state variables
           setIsLoggedIn(true);
           setIsLoading(false);
           setUser(user);
         })
         .catch((error) => {
-          if (error) {
-            setAuthError(error.response.data.message);
-            return;
-          }
-          // If the server sends an error response (invalid token)
-          // Update state variables
+          console.error("Error verifying user:", error);
           setIsLoggedIn(false);
           setIsLoading(false);
           setUser(null);
         });
     } else {
-      // If the token is not available
       setIsLoggedIn(false);
       setIsLoading(false);
       setUser(null);
     }
   };
-
+  
   const removeToken = () => {
     // Upon logout, remove the token from the localStorage
     localStorage.removeItem("authToken");
+    localStorage.removeItem("csrfToken");
   };
 
   const logOutUser = () => {
@@ -67,9 +64,20 @@ function AuthProviderWrapper(props) {
   };
 
   useEffect(() => {
-    // Run the function after the initial render,
-    // after the components in the App render for the first time.
-    authenticateUser();
+    axios
+      .get(`${API_URL}/form`)
+      .then((response) => {
+        const csrfToken = response.data.csrfToken;
+        console.log("CSRF Token fetched:", csrfToken);
+        localStorage.setItem("csrfToken", csrfToken);
+      })
+      .then(() => {
+        authenticateUser();
+      })
+      .catch((error) => {
+        console.error("Error fetching CSRF token:", error);
+        setIsLoading(false); // Ensure loading state is set to false in case of error
+      });
   }, []);
 
   return (
